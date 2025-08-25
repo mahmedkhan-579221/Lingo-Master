@@ -1,0 +1,1922 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>LingoMaster - Language Learning Platform</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="shortcut icon" href="Idara logo.png" type="image/x-icon">
+  <style>
+    /* Modern Color Palette - Only using the three provided colors */
+    :root {
+      --primary: #01b7c5;
+      --primary-dark: #0199a5;
+      --secondary: #1a144c;
+      --accent: #01b7c5;
+      --text-primary: #1a144c;
+      --text-secondary: #4a4863;
+      --background: #ffffff;
+      --card-bg: #ffffff;
+      --success: #01b7c5;
+      --warning: #1a144c;
+      --error: #1a144c;
+      --gray-100: #f0f9fa;
+      --gray-200: #e6f4f5;
+      --gray-300: #d1e8ea;
+    }
+
+    /* Reset and Base Styling */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--background);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    @supports (font-variation-settings: normal) {
+      body {
+        font-family: 'Inter var', 'Segoe UI', sans-serif;
+      }
+    }
+
+    /* Navigation Bar */
+    .navbar {
+      background: var(--card-bg);
+      padding: 1rem 2rem;
+      box-shadow: 0 4px 12px rgba(26, 20, 76, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .navbar.scrolled {
+      padding: 0.8rem 2rem;
+      box-shadow: 0 4px 20px rgba(26, 20, 76, 0.12);
+    }
+
+    .brand {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+    }
+
+    .brand-logo {
+      width: 36px;
+      height: 36px;
+      background: var(--primary);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      font-size: 0.95rem;
+    }
+
+    .xp-badge,
+    .streak-counter {
+      background: var(--gray-100);
+      padding: 8px 16px;
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+      box-shadow: 0 2px 6px rgba(26, 20, 76, 0.05);
+      transition: all 0.2s ease;
+    }
+
+    .xp-badge:hover,
+    .streak-counter:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(26, 20, 76, 0.08);
+    }
+
+    .xp-badge {
+      color: var(--primary);
+    }
+
+    .streak-counter {
+      color: var(--secondary);
+    }
+
+    /* Main Container */
+    .main-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Card Components */
+    .card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(26, 20, 76, 0.08);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin-bottom: 30px;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(26, 20, 76, 0.12);
+    }
+
+    .card-header {
+      padding: 24px 30px 0;
+      margin-bottom: 15px;
+    }
+
+    .card-body {
+      padding: 0 30px 30px;
+    }
+
+    /* Typography */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 0.5em;
+      color: var(--text-primary);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.8rem;
+    }
+
+    h2 {
+      font-size: 2rem;
+      color: var(--primary);
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      color: var(--primary-dark);
+    }
+
+    p {
+      margin-bottom: 1.2rem;
+      color: var(--text-secondary);
+    }
+
+    /* Forms */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"] {
+      width: 100%;
+      padding: 16px 20px;
+      font-size: 1rem;
+      border: 2px solid var(--gray-300);
+      border-radius: 12px;
+      outline: none;
+      transition: all 0.3s ease;
+      background: var(--gray-100);
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus,
+    input[type="email"]:focus {
+      border-color: var(--primary);
+      background: var(--card-bg);
+      box-shadow: 0 0 0 3px rgba(1, 183, 197, 0.15);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+      outline: none;
+      text-decoration: none;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 12px rgba(1, 183, 197, 0.25);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(1, 183, 197, 0.35);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary {
+      background: var(--gray-100);
+      color: var(--text-primary);
+    }
+
+    .btn-secondary:hover {
+      background: var(--gray-200);
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: white;
+    }
+
+    .btn-lg {
+      padding: 18px 32px;
+      font-size: 1.1rem;
+    }
+
+    .btn-block {
+      width: 100%;
+    }
+
+    /* Game Elements */
+    .word {
+      background: var(--gray-100);
+      display: inline-block;
+      padding: 12px 18px;
+      margin: 5px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 5px rgba(26, 20, 76, 0.05);
+    }
+
+    .word:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    #answerBox {
+      min-height: 60px;
+      padding: 15px;
+      background: var(--gray-100);
+      border-radius: 12px;
+      border: 2px dashed var(--primary);
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    /* Progress Elements */
+    .progress-container {
+      margin: 25px 0;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .progress-bar {
+      height: 10px;
+      background: var(--gray-200);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--primary);
+      border-radius: 10px;
+      transition: width 0.5s ease;
+      box-shadow: 0 0 10px rgba(1, 183, 197, 0.3);
+    }
+
+    /* Lesson Content */
+    .lesson-content {
+      padding: 20px 0;
+    }
+
+    .question-image {
+      width: 100%;
+      max-width: 500px;
+      border-radius: 12px;
+      margin: 20px auto;
+      display: block;
+      box-shadow: 0 5px 15px rgba(26, 20, 76, 0.08);
+    }
+
+    /* MCQ Options */
+    .mcq-options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 25px 0;
+    }
+
+    .mcq-option {
+      padding: 18px 20px;
+      background: var(--gray-100);
+      border: 2px solid var(--gray-300);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+      font-weight: 500;
+    }
+
+    .mcq-option:hover {
+      background: var(--gray-200);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .mcq-option.correct {
+      background: rgba(1, 183, 197, 0.1);
+      border-color: var(--success);
+      color: var(--success);
+    }
+
+    .mcq-option.incorrect {
+      background: rgba(26, 20, 76, 0.1);
+      border-color: var(--error);
+      color: var(--error);
+    }
+
+    /* Result Display */
+    .result-feedback {
+      padding: 16px 20px;
+      border-radius: 12px;
+      margin: 20px 0;
+      font-weight: 600;
+      text-align: center;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .result-correct {
+      background: rgba(1, 183, 197, 0.1);
+      color: var(--success);
+      border: 1px solid rgba(1, 183, 197, 0.3);
+    }
+
+    .result-incorrect {
+      background: rgba(26, 20, 76, 0.1);
+      color: var(--error);
+      border: 1px solid rgba(26, 20, 76, 0.3);
+    }
+
+    /* Hearts system */
+    .hearts-container {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+      gap: 10px;
+    }
+
+    .heart {
+      width: 32px;
+      height: 32px;
+      background-color: var(--primary);
+      position: relative;
+      transform: rotate(45deg);
+      transition: all 0.3s ease;
+    }
+
+    .heart:before,
+    .heart:after {
+      content: "";
+      width: 32px;
+      height: 32px;
+      background-color: var(--primary);
+      border-radius: 50%;
+      position: absolute;
+      transition: all 0.3s ease;
+    }
+
+    .heart:before {
+      top: -16px;
+      left: 0;
+    }
+
+    .heart:after {
+      top: 0;
+      left: -16px;
+    }
+
+    .heart.lost {
+      background-color: var(--gray-300);
+      transform: rotate(45deg) scale(0.9);
+    }
+
+    .heart.lost:before,
+    .heart.lost:after {
+      background-color: var(--gray-300);
+    }
+
+    /* Lesson completion screen */
+    .completion-screen {
+      text-align: center;
+      padding: 40px 30px;
+    }
+
+    .completion-badge {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 25px;
+      position: relative;
+    }
+
+    .completion-badge i {
+      font-size: 50px;
+      color: white;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+    }
+
+    .completion-badge:before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: var(--primary);
+      border-radius: 50%;
+      z-index: 1;
+      animation: pulse 2s infinite;
+    }
+
+    .completion-badge:after {
+      content: '';
+      position: absolute;
+      width: 110%;
+      height: 110%;
+      top: -5%;
+      left: -5%;
+      background: var(--primary);
+      border-radius: 50%;
+      opacity: 0.2;
+      z-index: 0;
+      animation: pulse 2s infinite reverse;
+    }
+
+    .xp-earned {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--secondary);
+      margin: 15px 0;
+      position: relative;
+      display: inline-block;
+    }
+
+    .xp-earned:after {
+      content: 'XP';
+      position: absolute;
+      top: -15px;
+      right: -40px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+    }
+
+    /* Roadmap Styles */
+    .roadmap-container {
+      position: relative;
+      margin: 40px 0;
+    }
+
+    .roadmap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .roadmap-line {
+      position: absolute;
+      top: 50px;
+      left: 50%;
+      width: 4px;
+      height: calc(100% - 100px);
+      background: var(--primary);
+      transform: translateX(-50%);
+      z-index: 0;
+      border-radius: 4px;
+    }
+
+    .step {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin: 60px 0;
+      position: relative;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .step:nth-child(odd) {
+      animation-delay: calc(var(--i) * 0.1s);
+    }
+
+    .step:nth-child(even) {
+      animation-delay: calc(var(--i) * 0.1s);
+    }
+
+    .level-node {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: var(--gray-200);
+      font-size: 16px;
+      font-weight: bold;
+      color: var(--text-secondary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 25px rgba(26, 20, 76, 0.1);
+      border: 6px solid var(--gray-300);
+      transition: all 0.3s ease;
+      cursor: not-allowed;
+      position: relative;
+      text-align: center;
+      z-index: 2;
+    }
+
+    .level-node i {
+      font-size: 24px;
+      margin-bottom: 6px;
+    }
+
+    .level-node.unlocked {
+      background: var(--primary);
+      color: white;
+      cursor: pointer;
+      border-color: var(--primary-dark);
+      animation: pulse 2s infinite;
+    }
+
+    .level-node.unlocked:hover {
+      transform: scale(1.05);
+    }
+
+    .level-node.completed {
+      background: var(--secondary);
+      border-color: var(--secondary);
+      color: white;
+    }
+
+    .level-progress {
+      position: absolute;
+      bottom: -30px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(1, 183, 197, 0.4);
+      }
+
+      70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 12px rgba(1, 183, 197, 0);
+      }
+
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(1, 183, 197, 0);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 1rem;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .navbar.scrolled {
+        padding: 0.8rem 1rem;
+      }
+
+      .user-profile {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      h2 {
+        font-size: 1.7rem;
+      }
+
+      .card {
+        border-radius: 12px;
+      }
+
+      .card-header,
+      .card-body {
+        padding: 20px;
+      }
+
+      .roadmap-line {
+        left: 30px;
+      }
+
+      .step {
+        justify-content: flex-start;
+        padding-left: 80px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .brand {
+        font-size: 1.5rem;
+      }
+
+      .btn {
+        padding: 14px 20px;
+        font-size: 0.95rem;
+      }
+
+      .step {
+        padding-left: 60px;
+      }
+
+      .level-node {
+        width: 80px;
+        height: 80px;
+        font-size: 14px;
+      }
+
+      .xp-badge,
+      .streak-counter {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+      }
+    }
+
+    /* Utility Classes */
+    .text-center {
+      text-align: center;
+    }
+
+    .mt-1 {
+      margin-top: 10px;
+    }
+
+    .mt-2 {
+      margin-top: 20px;
+    }
+
+    .mt-3 {
+      margin-top: 30px;
+    }
+
+    .mb-1 {
+      margin-bottom: 10px;
+    }
+
+    .mb-2 {
+      margin-bottom: 20px;
+    }
+
+    .mb-3 {
+      margin-bottom: 30px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    /* Admin Panel Styles */
+    #adminPanel {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.98);
+      z-index: 2000;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--gray-300);
+    }
+
+    .user-card {
+      background: var(--gray-100);
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(26, 20, 76, 0.06);
+      transition: all 0.2s ease;
+    }
+
+    .user-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(26, 20, 76, 0.1);
+    }
+
+    .admin-login-form {
+      max-width: 450px;
+      margin: 50px auto;
+    }
+
+    .admin-actions {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    /* Confetti animation */
+    .confetti {
+      position: fixed;
+      width: 12px;
+      height: 12px;
+      opacity: 0.7;
+      z-index: 1000;
+      animation: confetti-fall 5s linear forwards;
+    }
+
+    @keyframes confetti-fall {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Tooltip styling */
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      border-bottom: 1px dotted var(--primary);
+      cursor: help;
+    }
+
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 200px;
+      background-color: var(--text-primary);
+      color: white;
+      text-align: left;
+      border-radius: 8px;
+      padding: 10px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -100px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      font-weight: normal;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    .tooltip .tooltiptext::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: var(--text-primary) transparent transparent transparent;
+    }
+
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="adminPanel">
+    <div class="card">
+      <div class="card-body">
+        <div class="admin-header">
+          <h2><i class="fas fa-lock"></i> Admin Dashboard</h2>
+          <button class="btn btn-secondary" onclick="hideAdminPanel()">Close</button>
+        </div>
+
+        <div id="adminLogin">
+          <div class="admin-login-form">
+            <h3 class="text-center">Admin Authentication</h3>
+            <div class="form-group">
+              <label class="form-label" for="adminUsername">Username</label>
+              <input type="text" id="adminUsername" placeholder="Admin username">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="adminPassword">Password</label>
+              <input type="password" id="adminPassword" placeholder="Admin password">
+            </div>
+            <button class="btn btn-primary btn-block" onclick="adminLogin()">Access Dashboard</button>
+          </div>
+        </div>
+
+        <div id="adminContent" class="hidden">
+          <div class="admin-actions">
+            <button class="btn btn-primary" onclick="loadUserData()"><i class="fas fa-sync-alt"></i> Refresh
+              Data</button>
+            <button class="btn btn-primary" onclick="exportUserData()"><i class="fas fa-download"></i> Export
+              Data</button>
+            <button class="btn btn-secondary" style="background-color: var(--error); color: white;"
+              onclick="resetAllData()"><i class="fas fa-trash"></i> Reset All Data</button>
+          </div>
+          <h3>User Statistics</h3>
+          <div id="userStats"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="navbar" id="navbar">
+    <a href="#" class="brand">
+      <!-- <div class="brand-logo">
+        <i class="fas fa-language"></i>
+      </div> -->
+      <img src="Idara logo.png" alt="" height="50px">
+      LingoMaster
+    </a>
+    <div class="user-profile">
+      <div class="xp-badge"><i class="fas fa-star"></i> <span id="xpNav">0</span> XP</div>
+      <div class="streak-counter"><i class="fas fa-fire"></i> <span id="streak">0</span> Day Streak</div>
+      <button class="btn btn-secondary" onclick="showAdminLogin()" style="padding: 8px 16px;">Admin</button>
+    </div>
+  </nav>
+
+  <div class="main-container">
+    <div class="card" id="login">
+      <div class="card-body text-center">
+        <h1>Welcome to LingoMaster</h1>
+        <p class="mb-2">Learn languages with fun, interactive lessons tailored to your level!</p>
+        <div class="form-group">
+          <input type="text" id="username" placeholder="Enter your name to begin" />
+        </div>
+        <button class="btn btn-primary btn-lg btn-block" onclick="startApp()">
+          <i class="fas fa-rocket"></i> Start Learning Journey
+        </button>
+      </div>
+    </div>
+
+    <div class="card hidden" id="loading">
+      <div class="card-body text-center">
+        <h2><i class="fas fa-spinner fa-spin"></i> Loading...</h2>
+        <p>Preparing your personalized learning experience</p>
+      </div>
+    </div>
+
+    <div class="card hidden" id="roadmap-container">
+      <div class="card-header">
+        <h2>Your Learning Path</h2>
+        <p>Complete levels to unlock new content and track your progress</p>
+      </div>
+      <div class="card-body">
+        <div class="roadmap-container">
+          <div class="roadmap-line"></div>
+          <div class="roadmap" id="roadmap"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card hidden" id="lesson">
+      <div class="card-body">
+        <div class="hearts-container" id="heartsContainer">
+          <div class="heart" id="heart1"></div>
+          <div class="heart" id="heart2"></div>
+          <div class="heart" id="heart3"></div>
+          <div class="heart" id="heart4"></div>
+          <div class="heart" id="heart5"></div>
+        </div>
+
+        <div class="progress-container">
+          <div class="progress-label">
+            <span>Lesson Progress</span>
+            <span id="progressPercentage">0%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressBar"></div>
+          </div>
+        </div>
+
+        <div class="level-title text-center mb-2">
+          <div class="level-badge" id="currentLevelBadge">1</div>
+          <h2 id="questionTitle">Question</h2>
+        </div>
+
+        <div class="lesson-content" id="questionContent"></div>
+
+        <div class="result-feedback hidden" id="result"></div>
+
+        <button class="btn btn-primary btn-block mt-2 hidden" id="nextButton" onclick="nextQuestion()">
+          Next Question <i class="fas fa-arrow-right"></i>
+        </button>
+
+        <div class="xp-box text-center mt-3">
+          <div class="xp-earned" id="xp">0</div>
+          <p>Total XP Earned</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card hidden" id="lessonComplete">
+      <div class="card-body">
+        <div class="completion-screen">
+          <div class="completion-badge">
+            <i class="fas fa-trophy"></i>
+          </div>
+          <h2>Lesson Complete!</h2>
+          <p>You've successfully completed this lesson</p>
+
+          <div class="progress-circle mt-3 mb-2">
+            <svg viewBox="0 0 100 100">
+              <circle class="progress-circle-bg" cx="50" cy="50" r="40" />
+              <circle class="progress-circle-progress" cx="50" cy="50" r="40" stroke-dasharray="251.2"
+                id="progressCircle" />
+            </svg>
+            <div class="progress-circle-text" id="progressText">75%</div>
+          </div>
+
+          <p>Total XP Earned</p>
+          <div class="xp-earned" id="totalXp">12</div>
+
+          <p id="performanceText" class="mb-3">GOOD EFFORT</p>
+
+          <button class="btn btn-primary btn-lg" onclick="showRoadmap()">
+            <i class="fas fa-map"></i> Back to Learning Path
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <audio id="winSound" src="correct-6033.mp3" preload="auto"></audio>
+    <audio id="oopsSound" src="wrong-38598.mp3" preload="auto"></audio>
+    <audio id="levelUpSound" src="level-up-06-370051.mp3" preload="auto"></audio>
+  </div>
+
+  <script>
+    // The JavaScript code remains exactly the same as in your original code
+    // Only CSS and HTML structure have been enhanced
+    // All functionality is preserved
+
+    // Base64 encoded images for lesson content
+    const image2 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAMAAACahl6sAAAAOVBMVEX///8AAADn5+fd3d3T09PMzMzx8fH4+PjFxcWtra22traenp6QkJBtbW1ZWVlJSUk0NDQmJiYSEhLeKTI4AAAACXBIWXMAAAsTAAALEwEAmpwYAAADDElEQVR4nO2c226jMBBFjQED5pL7v/9yQy5t2kZqpVHnYdXztoqlwzA2BkKzLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+    const image3 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAMAAACahl6sAAAAOVBMVEX///8AAADn5+fd3d3T09PMzMzx8fH4+PjFxcWtra22traenp6QkJBtbW1ZWVlJSUk0NDQmJiYSEhLeKTI4AAAACXBIWXMAAAsTAAALEwEAmpwYAAADDElEQVR4nO2c226jMBBFjQED5pL7v/9yQy5t2kZqpVHnYdXztoqlw2A2BkKzLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+
+    // Add admin credentials (for demo purposes)
+    const ADMIN_CREDENTIALS = {
+      username: "admin",
+      password: "lingo123"
+    };
+
+    // User data storage functions
+    function getUserData() {
+      return JSON.parse(localStorage.getItem('lingoUsers') || '{}');
+    }
+
+    function saveUserData(users) {
+      localStorage.setItem('lingoUsers', JSON.stringify(users));
+    }
+
+    let currentQuestion = 0;
+    let xp = 0;
+    let streak = 0;
+    let user = '';
+    let unlockedLevel = 1;
+    let selectedLevel = 1;
+    let correctAnswersInLesson = 0;
+
+    const dictionary = {
+      "solo": { meaning: "By oneself", example: "He went solo on his trip" },
+      "means": { meaning: "Has as a meaning", example: "Big means not small" },
+      "alone": { meaning: "With no one else", example: "He lives alone" },
+      "planes": { meaning: "Flying vehicles", example: "planes fly in the sky." },
+      "take": { meaning: "leave the ground", example: "The plane takes off quickly" },
+      "off": { meaning: "leave the ground", example: "The plane takes off quickly" },
+      "and": { example: "I like ice-cream and cake" },
+      "leave": { meaning: "Go a way from", example: "They leave the store" },
+      "one": { meaning: "a single", example: "There is one apple" },
+      "airport": { meaning: "Place for planes", example: "We go to the airport." },
+      "a": { meaning: "Not many", example: "A few children play there" },
+      "few": { meaning: "Not many", example: "A few children play there" },
+      "hours": { meaning: "60 minutes", example: "it takes two hours" },
+      "later": { meaning: "After now", example: "I will it later" },
+      "They": { example: "They are very big" },
+      "land": { meaning: "Come to the ground", example: "The plane lands safely" },
+      "when": { meaning: "at the time", example: "i sleep when its dark." },
+      "you": { example: "you are my frind" },
+      "do": { meaning: "perform an action", example: "i do my homework" },
+      "something": { meaning: "a thing or action", example: "He saw something outside." },
+      "for": { meaning: "never bofore", example: "She rode a bike for the first time." },
+      "the": { meaning: "never bofore", example: "She rode a bike for the first time." },
+      "first": { meaning: "never bofore", example: "She rode a bike for the first time." },
+      "time": { meaning: "never bofore", example: "She rode a bike for the first time." },
+      "have": { meaning: "has completed in the past", example: "i have eaten breakfast" },
+      "never": { meaning: "not ever", example: "i never drink soda." },
+      "done": { meaning: "finished", example: "She has done her work." },
+      "it": { example: "Can you find it in the box?" },
+      "before": { meaning: "prior to", example: "i visited paris before." },
+      "that": { example: "that car is fast" },
+      "i'am": { meaning: "I am", example: "I'am happy today." },
+      "traveling": { meaning: "going on a trip", example: "She's traveling to Paris." },
+      "so": { meaning: "and so, because", example: "She's good, so she will win." },
+      "very": { meaning: "a lot, much", example: "He's very hungry." },
+      "traveler": { meaning: "a person who goes to many places", example: "He is traveler" },
+      "is": { example: "She is a teacher" },
+      "person": { meaning: "a human being", example: "She is a happy person." },
+      "who": { meaning: "Used to connect a subject", example: "She is a happy person." },
+      "travels": { meaning: "Goes to many places", example: "She travels every year." },
+      "how": { meaning: "asking the number of", example: "How many books do you have?" },
+      "many": { meaning: "asking the number of", example: "How many books do you have?" },
+      "countries": { meaning: "nations or lands", example: "“I've visited five countries.”" },
+      "been": { example: "“She's been in love before.”" },
+      "to": { example: "“I went to the store”" },
+      "my": { example: "“My car is blue”" },
+      "daughter": { meaning: "A female child", example: "“Her daughter is very smart”" },
+      "is": { example: "“She is my friend”" },
+      "too": { meaning: "also, as well", example: "I'am tired, too." },
+      "she": { example: "“She plays soccer.”" },
+      "visits": { meaning: "Goes to see", example: "He visits his mom." },
+      "new": { meaning: "not old, recently made.", example: "I got a new phone" },
+      "country": { meaning: "A nation, Area with borders", example: "Pakistan is a country" },
+      "every": { meaning: "each one of", example: "I see him every day." },
+      "month": { meaning: "About 30 days", example: "February is a short month." },
+    };
+
+    // Define questions for each level
+    const questions = {
+      1: [
+        {
+          type: "mcq",
+          question: 'Read and respond <br> solo means alone <br> Whats does "solo" mean?',
+          options: ["by yourself", "with your friends", "with your parents"],
+          answer: "by yourself",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
+        },
+
+        {
+          type: "arrange",
+          question: 'I usually travel solo because I do not like to travel with ________.',
+          words: ["people", "Jeans", "pillows", "tables"],
+          answer: "people",
+        },
+        {
+          type: "mcq",
+          question: 'Read And Respond <br> Plans take off and leave one airport. A few hours later, They land at another airport. <br> What does "Land" mean?',
+          options: ["For an actor to get famous", "For a plane to arrive", "For a car to leave"],
+          answer: "For a plane to arrive",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
+        },
+        {
+          type: "mcq",
+          question: 'Complete the chat "when does our flight land?"',
+          options: ["We will be busy tomorrow. How about Friday?", "We will be in New York in 40 minutes."],
+          answer: "We will be in New York in 40 minutes.",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
+        },
+        {
+          type: "mcq",
+          question: 'Read and respond "When you do something for the first time, you have never done it before that time." what does "for the first time" means?',
+          options: ["as usual", "as a new experience", "without any help"],
+          answer: "as a new experience",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
+        },
+        {
+          type: "arrange",
+          question: "Fill in the blanks <br> I'm traveling solo for the first time, so I'm very __________ !",
+          words: ["Short", "excited", "fat", "windy"],
+          answer: "excited",
+        },
+        {
+          type: "mcq",
+          question: 'Complete the chat <br> Are you traveling to the US for the first time?',
+          options: ["Yes, I've seen that guy on TV many times!", "Yes, I've never been there before."],
+          answer: "Yes, I've never been there before.",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
+        },
+        {
+          type: "mcq",
+          question: 'Read And Respond <br> A traveler is a person who travels <br>What does "traveler" means?',
+          options: ["somewhere you go on vacation", "somebody who takes trips", "something you travel to see"],
+          answer: "somebody who takes trips",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
+        },
+        {
+          type: "mcq",
+          question: 'Complete the chat <br> How many countries have you been to?',
+          options: ["Not many. I'm not a big traveler.", "My grandparents are from France."],
+          answer: "Not many. I'm not a big traveler.",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
+        },
+        {
+          type: "arrange",
+          question: "Fill in the blanks <br> our __________ just landed!",
+          words: ["plane", "evening", "country", "mouth"],
+          answer: "plane",
+        },
+        {
+          type: "mcq",
+          question: 'Complete the chat "My daughter is a traveler, too. She visits a new country every month."',
+          options: ["Wow, how cool! Where is she now?", "Yes, I have a window seat. It's 14A."],
+          answer: "Wow, how cool! Where is she now?",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
+        },
+        {
+          type: "arrange",
+          question: "Fill in the blanks <br> my suitcase is much __________ than my backpack.",
+          words: ["heavier", "evening", "country", "mouth"],
+          answer: "heavier",
+        },
+        {
+          type: "listen",
+          question: 'Listen and type',
+          say: "Travelers need trains and hotels",
+          answer: "Travelers need trains and hotels",
+        },
+        {
+          type: "listen",
+          question: 'Listen and type',
+          say: "Our flight lands at three o'clock right",
+          answer: "Our flight lands at three o'clock right",
+        },
+
+      ],
+      2: [
+        {
+          type: "listen",
+          question: 'Listen and type: "Hello"',
+          say: "Travelers need trains and hotels",
+          answer: "hello"
+        },
+
+        { type: "listen", question: 'Listen and type: "Hello"', say: "Hello", answer: "hello" },
+        { type: "listen", question: 'Listen and type: "Goodbye"', say: "Goodbye", answer: "goodbye" },
+        { type: "speak", question: 'Say: "Good morning"', answer: "good morning" },
+        { type: "speak", question: 'Say: "Thank you"', answer: "thank you" }
+      ],
+      3: [
+        { type: "mcq", question: 'Translate "Good"', options: ["Bueno", "Mal", "Feliz"], answer: "Bueno" },
+        { type: "mcq", question: 'Translate "Morning"', options: ["Noche", "Mañana", "Tarde"], answer: "Mañana" },
+        { type: "arrange", question: 'Arrange to form', words: ["morning", "good", "Good"], answer: "Good morning" },
+        { type: "arrange", question: 'Arrange to form', words: ["thank", "you", "I"], answer: "I thank you" }
+      ],
+      4: [
+        { type: "mcq", question: 'Translate "Apple"', options: ["Manzana", "Perro", "Casa"], answer: "Manzana" },
+        { type: "mcq", question: 'Translate "Dog"', options: ["Gato", "Perro", "Mesa"], answer: "Perro" },
+        { type: "arrange", question: 'Arrange to form', words: ["student", "I", "am", "a"], answer: "I am a student" },
+        { type: "arrange", question: 'Arrange to form', words: ["friend", "my", "are", "You"], answer: "You are my friend" }
+      ],
+      5: [
+        { type: "listen", question: 'Listen and type: "Hello"', say: "Hello", answer: "hello" },
+        { type: "listen", question: 'Listen and type: "Goodbye"', say: "Goodbye", answer: "goodbye" },
+        { type: "speak", question: 'Say: "Good morning"', answer: "good morning" },
+        { type: "speak", question: 'Say: "Thank you"', answer: "thank you" }
+      ],
+      6: [
+        { type: "mcq", question: 'Translate "Good"', options: ["Bueno", "Mal", "Feliz"], answer: "Bueno" },
+        { type: "mcq", question: 'Translate "Morning"', options: ["Noche", "Mañana", "Tarde"], answer: "Mañana" },
+        { type: "arrange", question: 'Arrange to form', words: ["morning", "good", "Good"], answer: "Good morning" },
+        { type: "arrange", question: 'Arrange to form', words: ["thank", "you", "I"], answer: "I thank you" }
+      ],
+      7: [
+        { type: "mcq", question: 'Translate "Apple"', options: ["Manzana", "Perro", "Casa"], answer: "Manzana" },
+        { type: "mcq", question: 'Translate "Dog"', options: ["Gato", "Perro", "Mesa"], answer: "Perro" },
+        { type: "arrange", question: 'Arrange to form', words: ["student", "I", "am", "a"], answer: "I am a student" },
+        { type: "arrange", question: 'Arrange to form', words: ["friend", "my", "are", "You"], answer: "You are my friend" }
+      ],
+      8: [
+        { type: "listen", question: 'Listen and type: "Hello"', say: "Hello", answer: "hello" },
+        { type: "listen", question: 'Listen and type: "Goodbye"', say: "Goodbye", answer: "goodbye" },
+        { type: "speak", question: 'Say: "Good morning"', answer: "good morning" },
+        { type: "speak", question: 'Say: "Thank you"', answer: "thank you" }
+      ],
+      9: [
+        { type: "mcq", question: 'Translate "Good"', options: ["Bueno", "Mal", "Feliz"], answer: "Bueno" },
+        { type: "mcq", question: 'Translate "Morning"', options: ["Noche", "Mañana", "Tarde"], answer: "Mañana" },
+        { type: "arrange", question: 'Arrange to form', words: ["morning", "good", "Good"], answer: "Good morning" },
+        { type: "arrange", question: 'Arrange to form', words: ["thank", "you", "I"], answer: "I thank you" }
+      ],
+      10: [
+        { type: "mcq", question: 'Translate "Good"', options: ["Bueno", "Mal", "Feliz"], answer: "Bueno" },
+        { type: "mcq", question: 'Translate "Morning"', options: ["Noche", "Mañana", "Tarde"], answer: "Mañana" },
+        { type: "arrange", question: 'Arrange to form', words: ["morning", "good", "Good"], answer: "Good morning" },
+        { type: "arrange", question: 'Arrange to form', words: ["thank", "you", "I"], answer: "I thank you" }
+      ],
+    };
+
+    // Initialize the app
+    function startApp() {
+      const name = document.getElementById('username').value.trim();
+      if (name) {
+        user = name;
+        document.getElementById('login').classList.add('hidden');
+        document.getElementById('loading').classList.remove('hidden');
+
+        // Update user data
+        const users = getUserData();
+        if (!users[name]) {
+          users[name] = {
+            xp: 0,
+            streak: 0,
+            level: 1,
+            lastLogin: new Date().toISOString(),
+            progress: {},
+            hearts: 5
+          };
+        }
+
+        // Check and update streak
+        const lastLogin = new Date(users[name].lastLogin);
+        const today = new Date();
+        if (today.toDateString() !== lastLogin.toDateString()) {
+          if ((today - lastLogin) / (1000 * 60 * 60 * 24) < 2) {
+            users[name].streak += 1;
+          } else {
+            users[name].streak = 1;
+          }
+        }
+
+        users[name].lastLogin = new Date().toISOString();
+        users[name].hearts = 5; // Reset hearts for new session
+        saveUserData(users);
+
+        // Update UI
+        xp = users[name].xp;
+        streak = users[name].streak;
+        document.getElementById('xpNav').innerText = xp;
+        document.getElementById('streak').innerText = streak;
+        document.getElementById('xp').innerText = xp;
+
+        setTimeout(() => {
+          document.getElementById('loading').classList.add('hidden');
+          showRoadmap();
+        }, 1500);
+      } else {
+        alert("Please enter your name to begin.");
+      }
+    }
+
+    // Admin panel functions
+    function showAdminLogin() {
+      document.getElementById('adminPanel').style.display = 'block';
+      document.getElementById('adminLogin').style.display = 'block';
+      document.getElementById('adminContent').style.display = 'none';
+    }
+
+    function hideAdminPanel() {
+      document.getElementById('adminPanel').style.display = 'none';
+    }
+
+    function adminLogin() {
+      const username = document.getElementById('adminUsername').value;
+      const password = document.getElementById('adminPassword').value;
+
+      if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+        document.getElementById('adminLogin').style.display = 'none';
+        document.getElementById('adminContent').style.display = 'block';
+        loadUserData();
+      } else {
+        alert('Invalid admin credentials!');
+      }
+    }
+
+    function loadUserData() {
+      const users = getUserData();
+      const statsDiv = document.getElementById('userStats');
+      statsDiv.innerHTML = '';
+
+      Object.entries(users).forEach(([username, data]) => {
+        const card = document.createElement('div');
+        card.className = 'user-card';
+        card.innerHTML = `
+          <div><strong>${username}</strong></div>
+          <div>Level: <span>${data.level}</span></div>
+          <div>XP: <span>${data.xp}</span></div>
+          <div>Streak: <span>${data.streak}</span></div>
+          <div>Hearts: <span>${data.hearts}</span></div>
+          <div>Last Login: ${new Date(data.lastLogin).toLocaleString()}</div>
+        `;
+        statsDiv.appendChild(card);
+      });
+    }
+
+    function exportUserData() {
+      const users = getUserData();
+      const dataStr = JSON.stringify(users, null, 2);
+      const blob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'lingo-users.json';
+      a.click();
+    }
+
+    function resetAllData() {
+      if (confirm("Are you sure you want to reset all user data? This cannot be undone.")) {
+        localStorage.removeItem('lingoUsers');
+        localStorage.removeItem('levelProgress');
+        loadUserData();
+        alert("All data has been reset.");
+      }
+    }
+
+    function showRoadmap() {
+      document.getElementById('roadmap-container').classList.remove('hidden');
+      document.getElementById('lesson').classList.add('hidden');
+      document.getElementById('lessonComplete').classList.add('hidden');
+      const roadmap = document.getElementById("roadmap");
+      const progress = parseInt(localStorage.getItem("levelProgress") || "1");
+
+      // Clear existing roadmap
+      roadmap.innerHTML = '';
+
+      for (let i = 1; i <= 10; i++) {
+        const step = document.createElement("div");
+        step.className = `step`;
+        step.style.setProperty('--i', i);
+
+        const node = document.createElement("div");
+        node.className = "level-node";
+
+        const levelText = document.createElement("div");
+        levelText.textContent = `Level ${i}`;
+        node.appendChild(levelText);
+
+        // Add icon based on status
+        const icon = document.createElement("i");
+        if (i <= progress) {
+          node.classList.add("unlocked");
+          node.onclick = () => {
+            startLevel(i);
+          };
+
+          if (i < progress) {
+            node.classList.add("completed");
+            icon.className = "fas fa-check";
+          } else {
+            icon.className = "fas fa-arrow-right";
+          }
+        } else {
+          icon.className = "fas fa-lock";
+        }
+
+        node.appendChild(icon);
+
+        // Add progress percentage for completed levels
+        if (i < progress) {
+          const progressText = document.createElement("div");
+          progressText.className = "level-progress";
+          progressText.textContent = "100% Complete";
+          step.appendChild(progressText);
+        }
+
+        step.appendChild(node);
+        roadmap.appendChild(step);
+      }
+    }
+
+    function startLevel(level) {
+      selectedLevel = level;
+      currentQuestion = 0;
+      correctAnswersInLesson = 0;
+
+      // Get user data to set hearts
+      const users = getUserData();
+      if (users[user]) {
+        updateHearts(users[user].hearts);
+      }
+
+      document.getElementById('roadmap-container').classList.add('hidden');
+      document.getElementById('lesson').classList.remove('hidden');
+      document.getElementById('currentLevelBadge').textContent = level;
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      const q = questions[selectedLevel][currentQuestion];
+      const titleEl = document.getElementById("questionTitle");
+      titleEl.innerHTML = wrapWordsWithTooltip(q.question);
+      addTooltipListeners(titleEl);
+      const content = document.getElementById("questionContent");
+      content.innerHTML = "";
+
+      const resultEl = document.getElementById("result");
+      resultEl.innerText = "";
+      resultEl.className = "result-feedback hidden";
+
+      document.getElementById("nextButton").classList.add('hidden');
+
+      // Show image if available
+      if (q.image) {
+        const img = document.createElement("img");
+        img.src = q.image;
+        img.className = "question-image";
+        content.appendChild(img);
+      }
+
+      if (q.type === "mcq") {
+        const optionsContainer = document.createElement("div");
+        optionsContainer.className = "mcq-options";
+
+        // 🔊 add replay button + autoplay
+        if (q.audio) {
+          const replayBtn = document.createElement("button");
+          replayBtn.className = "btn btn-secondary";
+          replayBtn.innerHTML = '<i class="fas fa-volume-up"></i> Listen again';
+          replayBtn.onclick = () => q.audio();
+          content.appendChild(replayBtn);
+
+          q.audio(); // autoplay once
+
+          q.options.forEach(opt => {
+            const btn = document.createElement("button");
+            btn.className = "mcq-option";
+            btn.innerText = opt;
+            btn.onclick = () => checkMCQ(opt, q.answer, btn);
+            optionsContainer.appendChild(btn);
+          });
+          content.appendChild(optionsContainer);
+
+
+        }
+
+      } else if (q.type === "arrange") {
+        let shuffled = [...q.words].sort(() => 0.5 - Math.random());
+        const container = document.createElement("div");
+        container.id = "arrangeWords";
+        shuffled.forEach(word => {
+          const span = document.createElement("span");
+          span.className = "word";
+          span.innerText = word;
+          span.onclick = () => selectWord(span);
+          container.appendChild(span);
+        });
+        const answerBox = document.createElement("div");
+        answerBox.id = "answerBox";
+        content.appendChild(container);
+        content.appendChild(answerBox);
+        const checkBtn = document.createElement("button");
+        checkBtn.className = "btn btn-primary";
+        checkBtn.innerText = "Check Answer";
+        checkBtn.onclick = () => checkArrange(q.answer);
+        content.appendChild(checkBtn);
+      } else if (q.type === "listen") {
+        const speakBtn = document.createElement("button");
+        speakBtn.className = "btn btn-primary";
+        speakBtn.innerHTML = '<i class="fas fa-volume-up"></i> Play';
+        speakBtn.onclick = () => speakText(q.say);
+        content.appendChild(speakBtn);
+
+        const inputGroup = document.createElement("div");
+        inputGroup.style.marginTop = "20px";
+
+        const input = document.createElement("input");
+        input.type = "text";
+        input.id = "listenInput";
+        input.placeholder = "Type what you hear";
+        inputGroup.appendChild(input);
+
+        const checkBtn = document.createElement("button");
+        checkBtn.className = "btn btn-primary";
+        checkBtn.style.marginTop = "15px";
+        checkBtn.innerText = "Check Answer";
+        checkBtn.onclick = () => {
+          const val = input.value.toLowerCase().trim();
+          showResult(val === q.answer.toLowerCase());
+        };
+        inputGroup.appendChild(checkBtn);
+
+        content.appendChild(inputGroup);
+      } else if (q.type === "speak") {
+        const micBtn = document.createElement("button");
+        micBtn.className = "btn btn-primary";
+        micBtn.innerHTML = '<i class="fas fa-microphone"></i> Start Speaking';
+        micBtn.onclick = startSpeechRecognition;
+        content.appendChild(micBtn);
+
+        const status = document.createElement("p");
+        status.id = "speechStatus";
+        status.innerText = "Click the button and speak the phrase clearly";
+        status.style.marginTop = "15px";
+        content.appendChild(status);
+      }
+
+      updateProgressBar();
+    }
+
+    function wrapWordsWithTooltip(text) {
+      return text.split(/\s+/).map(word => {
+        const clean = word.replace(/[^a-zA-Z]/g, "").toLowerCase();
+        if (dictionary[clean]) {
+          const tooltip = `${dictionary[clean].meaning}\nExample: ${dictionary[clean].example}`;
+          return `<span class="tooltip">${word}<span class="tooltiptext">${tooltip}</span></span>`;
+        }
+        return word;
+      }).join(" ");
+    }
+
+    function addTooltipListeners(container) {
+      container.querySelectorAll(".tooltip").forEach(el => {
+        el.addEventListener("mouseenter", () => {
+          const word = el.textContent.toLowerCase();
+          if (dictionary[word]) {
+            speakText(word);
+          }
+        });
+      });
+    }
+
+    function updateProgressBar() {
+      const progress = (currentQuestion / questions[selectedLevel].length) * 100;
+      document.getElementById("progressBar").style.width = progress + "%";
+      document.getElementById("progressPercentage").textContent = Math.round(progress) + "%";
+    }
+
+    function updateHearts(count) {
+      for (let i = 1; i <= 5; i++) {
+        const heart = document.getElementById(`heart${i}`);
+        if (i > count) {
+          heart.classList.add('lost');
+        } else {
+          heart.classList.remove('lost');
+        }
+      }
+    }
+
+    function checkMCQ(selected, answer, button) {
+      const correct = selected === answer;
+
+      // Visual feedback
+      if (correct) {
+        button.classList.add("correct");
+      } else {
+        button.classList.add("incorrect");
+        // Highlight correct answer
+        const options = document.querySelectorAll('.mcq-option');
+        options.forEach(opt => {
+          if (opt.textContent === answer) {
+            opt.classList.add("correct");
+          }
+        });
+      }
+
+      // Disable all buttons after selection
+      document.querySelectorAll('.mcq-option').forEach(btn => {
+        btn.disabled = true;
+      });
+
+      showResult(correct);
+    }
+
+    function selectWord(span) {
+      const clone = span.cloneNode(true);
+      clone.onclick = () => {
+        document.getElementById("answerBox").removeChild(clone);
+        span.style.visibility = "visible";
+      };
+      document.getElementById("answerBox").appendChild(clone);
+      span.style.visibility = "hidden";
+    }
+
+    function checkArrange(answer) {
+      const words = Array.from(document.getElementById("answerBox").children).map(w => w.innerText);
+      showResult(words.join(" ") === answer);
+    }
+
+    function speakText(text) {
+      if ('speechSynthesis' in window) {
+        const msg = new SpeechSynthesisUtterance(text);
+        msg.rate = 0.7; // slow down (1 = normal speed)
+        window.speechSynthesis.speak(msg);
+      } else {
+        alert("Speech synthesis not supported in your browser.");
+      }
+    }
+
+
+    function startSpeechRecognition() {
+      if (!('webkitSpeechRecognition' in window)) {
+        alert("Speech recognition not supported in your browser.");
+        return;
+      }
+      const recognition = new webkitSpeechRecognition();
+      recognition.lang = 'en-US';
+      recognition.onresult = function (event) {
+        const spoken = event.results[0][0].transcript.toLowerCase().trim();
+        const expected = questions[selectedLevel][currentQuestion].answer.toLowerCase();
+        document.getElementById("speechStatus").innerText = `You said: "${spoken}"`;
+        showResult(spoken === expected);
+      };
+      recognition.start();
+    }
+
+    function showResult(correct) {
+      const result = document.getElementById("result");
+      const winSound = document.getElementById("winSound");
+      const oopsSound = document.getElementById("oopsSound");
+
+      if (correct) {
+        result.innerText = "✅ Correct! +10 XP";
+        result.className = "result-feedback result-correct";
+        xp += 10;
+        correctAnswersInLesson++;
+        winSound.play();
+        createConfetti();
+
+        // Update user data
+        const users = getUserData();
+        if (users[user]) {
+          users[user].xp = xp;
+          users[user].streak = parseInt(document.getElementById('streak').innerText);
+          users[user].level = unlockedLevel;
+          saveUserData(users);
+        }
+      } else {
+
+        result.innerText = "❌ Try Again!";
+        result.className = "result-feedback result-incorrect";
+        oopsSound.play();
+
+        // Lose a heart
+        const users = getUserData();
+        if (users[user]) {
+          users[user].hearts -= 1;
+          saveUserData(users);
+          updateHearts(users[user].hearts);
+
+          // Check if out of hearts
+          if (users[user].hearts <= 0) {
+            setTimeout(() => {
+              alert("You're out of hearts! Practice makes perfect. Try again later.");
+              document.getElementById("lesson").classList.add("hidden");
+              showRoadmap();
+            }, 1000);
+          }
+        }
+      }
+
+      document.getElementById("xp").innerText = xp;
+      document.getElementById("xpNav").innerText = xp;
+
+      // Show next button if not the last question
+      if (currentQuestion < questions[selectedLevel].length - 1) {
+        document.getElementById("nextButton").classList.remove('hidden');
+      }
+
+      if (correct && currentQuestion === questions[selectedLevel].length - 1) {
+        // Level completed
+        if (selectedLevel >= unlockedLevel) {
+          unlockedLevel++;
+          localStorage.setItem("levelProgress", unlockedLevel);
+
+          // Update user progress
+          const users = getUserData();
+          if (users[user]) {
+            users[user].level = unlockedLevel;
+            saveUserData(users);
+          }
+        }
+
+        // Show lesson complete screen after a short delay
+        setTimeout(() => {
+          showLessonComplete();
+        }, 1500);
+      }
+
+      result.classList.remove('hidden');
+    }
+
+    function showLessonComplete() {
+      document.getElementById("lesson").classList.add("hidden");
+      document.getElementById("lessonComplete").classList.remove("hidden");
+
+      const percentage = Math.round((correctAnswersInLesson / questions[selectedLevel].length) * 100);
+      const totalXp = correctAnswersInLesson * 10;
+
+      document.getElementById("totalXp").textContent = totalXp;
+
+      // Animate progress circle
+      const circumference = 2 * Math.PI * 40;
+      const offset = circumference - (percentage / 100) * circumference;
+      document.getElementById("progressCircle").style.strokeDasharray = circumference;
+      document.getElementById("progressCircle").style.strokeDashoffset = offset;
+      document.getElementById("progressText").textContent = `${percentage}%`;
+
+      // Show appropriate message based on performance
+      let message = "GOOD EFFORT";
+      if (percentage >= 90) message = "EXCELLENT WORK!";
+      else if (percentage >= 70) message = "GREAT JOB";
+      else if (percentage >= 50) message = "GOOD EFFORT";
+      else message = "KEEP PRACTICING";
+
+      document.getElementById("performanceText").textContent = message;
+
+      document.getElementById('levelUpSound').play();
+      createConfetti();
+    }
+
+    function createConfetti() {
+      for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+        confetti.style.animationDelay = Math.random() * 5 + 's';
+        document.body.appendChild(confetti);
+
+        // Remove confetti after animation
+        setTimeout(() => {
+          confetti.remove();
+        }, 5000);
+      }
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < questions[selectedLevel].length) {
+        loadQuestion();
+      }
+    }
+
+    // Initialize the app
+    window.onload = function () {
+      unlockedLevel = parseInt(localStorage.getItem("levelProgress") || "1");
+
+      // Check if user was previously logged in
+      const users = getUserData();
+      const userKeys = Object.keys(users);
+      if (userKeys.length > 0) {
+        // Auto-login the first user (for demo purposes)
+        user = userKeys[0];
+        document.getElementById('username').value = user;
+        document.getElementById('xpNav').innerText = users[user].xp;
+        document.getElementById('streak').innerText = users[user].streak;
+      }
+
+      // Add scroll event listener for navbar
+      window.addEventListener('scroll', function () {
+        const navbar = document.getElementById('navbar');
+        if (window.scrollY > 10) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+      });
+    };
+
+    function addTooltipListeners(container) {
+      container.querySelectorAll(".tooltip").forEach(el => {
+        // Get the first child node which should be the text node containing the word
+        const wordNode = el.childNodes[0];
+        if (wordNode && wordNode.nodeType === Node.TEXT_NODE) {
+          const word = wordNode.textContent.toLowerCase().trim();
+          el.addEventListener("mouseenter", () => {
+            if (dictionary[word]) {
+              speakText(word);
+            }
+          });
+        }
+      });
+    }
+  </script>
+</body>
+
+</html>
