@@ -6,7 +6,6 @@
   <title>LingoMaster - Language Learning Platform</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="shortcut icon" href="Idara logo.png" type="image/x-icon">
   <style>
     /* Modern Color Palette - Only using the three provided colors */
     :root {
@@ -524,6 +523,63 @@
       color: var(--text-secondary);
     }
 
+    /* Progress Circle Styles - ADDED THIS SECTION */
+    .progress-circle {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 20px;
+    }
+
+    .progress-circle svg {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+    }
+
+    .progress-circle-bg {
+      fill: none;
+      stroke: var(--gray-200);
+      stroke-width: 6;
+    }
+
+    .progress-circle-progress {
+      fill: none;
+      stroke: var(--primary);
+      stroke-width: 6;
+      stroke-linecap: round;
+      stroke-dasharray: 251.2;
+      stroke-dashoffset: 251.2;
+      transition: stroke-dashoffset 1s ease;
+    }
+
+    .progress-circle-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    :root {
+      --primary: #01b7c5;
+      --primary-dark: #0199a5;
+      --secondary: #1a144c;
+      --accent: #01b7c5;
+      --text-primary: #1a144c;
+      --text-secondary: #4a4863;
+      --background: #ffffff;
+      --card-bg: #ffffff;
+      --success: #01b7c5;
+      --warning: #1a144c;
+      --error: #1a144c;
+      --gray-100: #f0f9fa;
+      --gray-200: #e6f4f5;
+      --gray-300: #d1e8ea;
+    }
+
     /* Roadmap Container */
     .roadmap-container {
       position: relative;
@@ -898,7 +954,7 @@
       width: 200px;
       background-color: var(--text-primary);
       color: white;
-      text-align: left;
+      text-align: center;
       border-radius: 8px;
       padding: 10px;
       position: absolute;
@@ -974,10 +1030,9 @@
 
   <nav class="navbar" id="navbar">
     <a href="#" class="brand">
-      <!-- <div class="brand-logo">
+      <div class="brand-logo">
         <i class="fas fa-language"></i>
-      </div> -->
-      <img src="Idara logo.png" alt="" height="50px">
+      </div>
       LingoMaster
     </a>
     <div class="user-profile">
@@ -1091,12 +1146,15 @@
       </div>
     </div>
 
-    <audio id="winSound" src="correct-6033.mp3" preload="auto"></audio>
-    <audio id="oopsSound" src="wrong-38598.mp3" preload="auto"></audio>
-    <audio id="levelUpSound" src="level-up-06-370051.mp3" preload="auto"></audio>
+    <audio id="winSound" src="correct-6033.mp3"
+      preload="auto"></audio>
+    <audio id="oopsSound" src="wrong-38598.mp3"
+      preload="auto"></audio>
+    <audio id="levelUpSound" src="level-up-06-370051.mp3"
+      preload="auto"></audio>
   </div>
 
-  <script>
+    <script>
     // The JavaScript code remains exactly the same as in your original code
     // Only CSS and HTML structure have been enhanced
     // All functionality is preserved
