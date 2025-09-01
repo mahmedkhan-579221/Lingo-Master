@@ -1189,6 +1189,7 @@
     let correctAnswersInLesson = 0;
 
     const dictionary = {
+      //level 01
       "solo": { meaning: "By oneself", example: "He went solo on his trip" },
       "means": { meaning: "Has as a meaning", example: "Big means not small" },
       "alone": { meaning: "With no one else", example: "He lives alone" },
@@ -1243,6 +1244,42 @@
       "country": { meaning: "A nation, Area with borders", example: "Pakistan is a country" },
       "every": { meaning: "each one of", example: "I see him every day." },
       "month": { meaning: "About 30 days", example: "February is a short month." },
+
+      //level 02
+      "I": { example: "“I am your teacher.”" },
+      "Bought": { meaning: "past tense of buy", example: "“I bought a gift.”" },
+      "Tickets": { meaning: "a thing that let you enter a place or access an event", example: "“She bought two tickets for the concert.”" },
+      "For": { meaning: "with the purpose of", example: "“Tom bought flowers for his wife.”" },
+      "A": { example: "“I saw a bird.”" },
+      "flight": { meaning: "trip by airplane", example: "“We took a flight to Paris.”" },
+      "That": { example: "He found a toy that he liked." },
+      "Land": { meaning: "touches the ground", example: "“The plane lands in an hour.”" },
+      "at": { meaning: "used to show exactly when something happens", example: "“We ate lunch at noon.”" },
+      "10 a.m": { meaning: "ten o'clock in the morning", example: "“Her train arrives at 10 a.m.”" },
+      "because": { example: "“I'm happy because it's sunny.”" },
+      "Prefer": { meaning: "like better", example: "“I prefer apples to oranges.”" },
+      "an": { example: "“She has an umbrella.”" },
+      "early": { meaning: "before a usual time", example: "“He wakes up early.”" },
+      "arrival": { meaning: "act of getting to a place", example: "“Her arrival at the party was surprising.”" },
+      "Me": { meaning: "used to get someone's attention", example: "“Excuse me, can you help me?”" },
+      "Do": { meaning: "used to form question", example: "“Do you like pizza?”" },
+      "You": { example: "“You are my friend.”" },
+      "know": { meaning: "be aware of", example: "“I know her name.”" },
+      "our": { example: "“This is our car.”" },
+      "arrival": { meaning: "when you reach somewhere", example: "“The plane had a safe arrival.”" },
+      "time": { meaning: "when something occurs", example: "“What time is lunch ?”" },
+      "Travelers": { meaning: "people exploring new places", example: "“Travelers love seeing new things.”" },
+      "can": { meaning: "able to", example: "“You can swim in the pool.”" },
+      "take": { meaning: "go on", example: "“I can take a walk.”" },
+      "short ride": { meaning: "brief trip", example: "“Let's have a short ride.”" },
+      "on": { meaning: "using, by means of", example: "“We can go on foot.”" },
+      "shuttle": { meaning: "transport that goes back and forth", example: "“You can take a shuttle to work.”" },
+      "to": { example: "“He is walking to school.”" },
+      "between": { meaning: "in the middle of two", example: "“I am sitting between two people.”" },
+      "Two": { meaning: 'one plus one', example: "“I have two apples.”" },
+      "nearby": { meaning: "Close", example: "“I live nearby the school.”" },
+      "places": { meaning: "Locations", example: "“There are many beautiful places to visit.”" },
+
     };
 
     // Define questions for each level
@@ -1371,13 +1408,13 @@
         },
         {
           type: "listen",
-          question: 'Listen and type',
+          question: 'Listen and type <br> need travelers hotels trains and',
           say: "Travelers need trains and hotels",
           answer: "Travelers need trains and hotels",
         },
         {
           type: "listen",
-          question: 'Listen and type',
+          question: "Listen and type <br>Our three flight lands at right o'clock",
           say: "Our flight lands at three o'clock right",
           answer: "Our flight lands at three o'clock right",
         },
@@ -1385,22 +1422,183 @@
       ],
       2: [
         {
-          type: "listen",
-          question: 'Listen and type: "Hello"',
-          say: "Travelers need trains and hotels",
-          answer: "hello"
+          type: "mcq",
+          question: 'Read and Respond <br> I bought tickets for a flight that lands at 10 a.m. because I prefer an early arrival. What does “arrival” mean?',
+          options: ["staying at a place", "leaving a place", "getting to a place"],
+          answer: "getting to a place",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
         },
-
-        { type: "listen", question: 'Listen and type: "Hello"', say: "Hello", answer: "hello" },
-        { type: "listen", question: 'Listen and type: "Goodbye"', say: "Goodbye", answer: "goodbye" },
-        { type: "speak", question: 'Say: "Good morning"', answer: "good morning" },
-        { type: "speak", question: 'Say: "Thank you"', answer: "thank you" }
+        {
+          type: "mcq",
+          question: 'Complete the chat "Excuse me, do you know our arrival time?"',
+          options: ["We should be in New York at 3 p.m.", "We should take off our hats now."],
+          answer: "We should be in New York at 3 p.m.",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
+        },
+        {
+          type: "mcq",
+          question: 'Read and Respond <br> Travelers can take a short ride on a shuttle to travel between two nearby places. What does “shuttle” mean?',
+          options: ["a long, difficult trip", "a quiet type of bird", "a type of bus or train"],
+          answer: "a type of bus or train",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
+        },
+        {
+          type: "mcq",
+          question: "Read and Respond <br> We need to take this shuttle to Kevin's house.",
+          options: ["kick", "study", "wear", "take"],
+          answer: "take",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
+        },
+        {
+          type: "mcq",
+          question: 'Complete the chat "How can I get downtown?"',
+          options: ["There's an airport shuttle, or you can get a taxi.", "There's a nice café inside. I love their desserts!"],
+          answer: "There's an airport shuttle, or you can get a taxi.",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
+        },
+        {
+          type: "mcq",
+          question: 'Read and Respond "When you enter a new country, the airport workers check your passport at passport control. <br> What does “passport control” mean?"',
+          options: ["a document for travel", "a place for an ID check", "a person who watches you"],
+          answer: "a place for an ID check",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
+        },
+        {
+          type: "mcq",
+          question: 'Read and Respond "I only check your passport and visa at the passport control."',
+          options: ["visa", "lunch", "nose", "world"],
+          answer: "visa",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
+        },
+        {
+          type: "mcq",
+          question: 'Complete the chat "Why is the line at passport control so long?"',
+          options: ["Well, five flights arrived at the same time.", "Well, I like flying, but now I'm a little tired."],
+          answer: "Well, five flights arrived at the same time.",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
+        },
+        {
+          type: "mcq",
+          question: "Read and Respond My suitcase is too heavy, so I can't walk much farther.",
+          options: ["ask", "sing", "walk", "read"],
+          answer: "walk",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
+        },
+        {
+          type: "mcq",
+          question: 'Complete the chat "Can I get on a bus here?"',
+          options: ["No, you can't smoke here. Look at the sign!", "No, it stops over there, near the gift shop."],
+          answer: "No, it stops over there, near the gift shop.",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
+        },
+        {
+          type: "mcq",
+          question: "Complete the chat Can you help me? I can't find the subway station.'",
+          options: ["Just walk a little farther, you can't miss it.", "Walk for an hour daily, and you'll feel better."],
+          answer: "Just walk a little farther, you can't miss it.",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
+        },
+        {
+          type: "mcq",
+          question: 'Read and Respond "Should I wait for the taxi over there, or here?"',
+          options: ["here", "too", "now"],
+          answer: "here",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
+        },
+        {
+          type: "mcq",
+          question: "Read and Respond Grandma can only walk one or two miles. The store is farther than that, so let's.",
+          options: ["fly", "run", "drive"],
+          answer: "drive",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
+        },
+        {
+          type: "mcq",
+          question: 'Read and Respond "I love Japan. Over there, the trains are much more modern than in my city."',
+          options: ["many", "much more", "much"],
+          answer: "much more",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
+        },
       ],
       3: [
         { type: "mcq", question: 'Translate "Good"', options: ["Bueno", "Mal", "Feliz"], answer: "Bueno" },
         { type: "mcq", question: 'Translate "Morning"', options: ["Noche", "Mañana", "Tarde"], answer: "Mañana" },
         { type: "arrange", question: 'Arrange to form', words: ["morning", "good", "Good"], answer: "Good morning" },
-        { type: "arrange", question: 'Arrange to form', words: ["thank", "you", "I"], answer: "I thank you" }
+        { type: "arrange", question: 'Arrange to form', words: ["thank", "you", "I"], answer: "I thank you" },
+        { type: "listen", question: 'Listen and type: "Hello"', say: "Hello", answer: "hello" },
+        { type: "listen", question: 'Listen and type: "Goodbye"', say: "Goodbye", answer: "goodbye" },
+        { type: "speak", question: 'Say: "Good morning"', answer: "good morning" },
+        { type: "speak", question: 'Say: "Thank you"', answer: "thank you" }
       ],
       4: [
         { type: "mcq", question: 'Translate "Apple"', options: ["Manzana", "Perro", "Casa"], answer: "Manzana" },
@@ -2024,3 +2222,4 @@
 </body>
 
 </html>
+
