@@ -1694,7 +1694,7 @@
                     type: "mcq",
                     question: 'Read and Respond: <br> "After I got to my room, I unpacked my suitcase and put my clothes in the closet. What does “unpack” mean?',
                     options: ["take things out of a suitcase", "put things in a refrigerator", "take out the trash tomorrow"],
-                    answer: "",
+                    answer: "take things out of a suitcase",
                     audio: function () {
                         let text = this.question.replace(/<br>/g, " ");
                         let utterance = new SpeechSynthesisUtterance(text);
@@ -1704,15 +1704,15 @@
                 },
                 {
                     type: "listen",
-                    question: "Listen and type: <br> I Unpacked my bags but I can't find my hat",
-                    say: "I Unpacked my bags but I can't find my hat",
-                    answer: "I Unpacked my bags but I can't find my hat",
+                    question: "Listen and type: <br> I unpacked my bags but I can't find my hat",
+                    say: "I unpacked my bags but I can't find my hat",
+                    answer: "I unpacked my bags but I can't find my hat",
                 },
                 {
                     type: "mcq",
                     question: 'Read and Respond: <br> "When you do the laundry, you wash your clothes. What does “laundry” mean?',
                     options: ["a sport with water", "clothes you need to clean", "a clean, friendly animal"],
-                    answer: "",
+                    answer: "clothes you need to clean",
                     audio: function () {
                         let text = this.question.replace(/<br>/g, " ");
                         let utterance = new SpeechSynthesisUtterance(text);
@@ -1730,7 +1730,7 @@
                     type: "mcq",
                     question: 'Read and Respond: <br> Excuse me, do you have a laundry room?',
                     options: ["Yes, and it's an amazing book! You should read it!", "Yes, and it's free for the guests of our hotel."],
-                    answer: "",
+                    answer: "Yes, and it's free for the guests of our hotel.",
                     audio: function () {
                         let text = this.question.replace(/<br>/g, " ");
                         let utterance = new SpeechSynthesisUtterance(text);
@@ -1742,7 +1742,7 @@
                     type: "mcq",
                     question: 'Read and Respond: <br> I paid for the hotel room, but breakfast costs extra. I had to pay again. What does “extra” mean?',
                     options: ["more", "free", "little"],
-                    answer: "",
+                    answer: "more",
                     audio: function () {
                         let text = this.question.replace(/<br>/g, " ");
                         let utterance = new SpeechSynthesisUtterance(text);
@@ -1754,7 +1754,7 @@
                     type: "mcq",
                     question: 'Read and Respond: <br> If you want to stay another night, it will cost extra.',
                     options: ["cost", "travel", "find", "fly"],
-                    answer: "",
+                    answer: "cost",
                     audio: function () {
                         let text = this.question.replace(/<br>/g, " ");
                         let utterance = new SpeechSynthesisUtterance(text);
@@ -1766,7 +1766,7 @@
                     type: "mcq",
                     question: "Read and Respond: <br> Here's your room key! Would you like to pay for breakfast?",
                     options: ["1Oh, does it cost extra?", "2Oh, does he cook well?"],
-                    answer: "",
+                    answer: "1Oh, does it cost extra?",
                     audio: function () {
                         let text = this.question.replace(/<br>/g, " ");
                         let utterance = new SpeechSynthesisUtterance(text);
@@ -1778,7 +1778,7 @@
                     type: "mcq",
                     question: "Read and Respond: <br> To reserve a room, call the hotel before your trip and tell the receptionist how many beds you want. <br> What does “reserve” mean?",
                     options: ["leave without telling Mom", "make dirty before my arrival", "keep available for you"],
-                    answer: "",
+                    answer: "keep available for you",
                     audio: function () {
                         let text = this.question.replace(/<br>/g, " ");
                         let utterance = new SpeechSynthesisUtterance(text);
@@ -1788,9 +1788,9 @@
                 },
                 {
                     type: "mcq",
-                    question: "Read and Respond: <br>I need to reserve a room, but no one's here!",
+                    question: "Read and Respond: <br>I need to reserve a ___________, but no one's here!",
                     options: ["goal", "life", "mistake", "room"],
-                    answer: "",
+                    answer: "room",
                     audio: function () {
                         let text = this.question.replace(/<br>/g, " ");
                         let utterance = new SpeechSynthesisUtterance(text);
@@ -1802,7 +1802,7 @@
                     type: "mcq",
                     question: "Read and Respond: <br>You should ask them if you can smoke in the hotel. You can only smoke if they let you. What does “let you” mean?",
                     options: ["say that you can", "talk very loud", "tell you not to"],
-                    answer: "",
+                    answer: "say that you can",
                     audio: function () {
                         let text = this.question.replace(/<br>/g, " ");
                         let utterance = new SpeechSynthesisUtterance(text);
@@ -1820,7 +1820,7 @@
                     type: "mcq",
                     question: "Read and Respond: <br> Excuse me, I think I heard a dog on my floor.",
                     options: ["That's possible. We let our guests bring small pets", "That's a great idea! I've always wanted another pet!"],
-                    answer: "",
+                    answer: "That's possible. We let our guests bring small pets",
                     audio: function () {
                         let text = this.question.replace(/<br>/g, " ");
                         let utterance = new SpeechSynthesisUtterance(text);
@@ -1832,7 +1832,7 @@
                     type: "mcq",
                     question: "Read and Respond: <br> I need to unpack my bag, but I'm late!",
                     options: ["zoo", "math", "wall", "bag"],
-                    answer: "",
+                    answer: "bag",
                     audio: function () {
                         let text = this.question.replace(/<br>/g, " ");
                         let utterance = new SpeechSynthesisUtterance(text);
