@@ -1047,17 +1047,19 @@
 
     <div class="main-container">
         <div class="card" id="login">
-            <div class="card-body text-center">
-                <h1>Welcome to LingoMaster</h1>
-                <p class="mb-2">Learn languages with fun, interactive lessons tailored to your level!</p>
-                <div class="form-group">
-                    <input type="text" id="username" placeholder="Enter your name to begin" />
-                </div>
-                <button class="btn btn-primary btn-lg btn-block" onclick="startApp()">
-                    <i class="fas fa-rocket"></i> Start Learning Journey
-                </button>
-            </div>
+      <div class="card-body text-center">
+        <h1>Welcome to LingoMaster</h1>
+        <p class="mb-2">Learn languages with fun, interactive lessons tailored to your level!</p>
+        <div class="form-group">
+          <input type="text" id="username" placeholder="Enter your name to begin" /><br><br>
+          <input type="text" id="class" placeholder="Enter your class" /><br><br>
+          <input type="text" id="campus" placeholder="Enter your campus" />
         </div>
+        <button class="btn btn-primary btn-lg btn-block" onclick="startApp()">
+          <i class="fas fa-rocket"></i> Start Learning Journey
+        </button>
+      </div>
+    </div>
 
         <div class="card hidden" id="loading">
             <div class="card-body text-center">
@@ -1891,57 +1893,66 @@
             ],
         };
 
-        // Initialize the app
-        function startApp() {
-            const name = document.getElementById('username').value.trim();
-            if (name) {
-                user = name;
-                document.getElementById('login').classList.add('hidden');
-                document.getElementById('loading').classList.remove('hidden');
+           // Initialize the app
+    function startApp() {
+      const name = document.getElementById('username').value.trim();
+      const userClass = document.getElementById('class').value.trim();
+      const campus = document.getElementById('campus').value.trim();
 
-                // Update user data
-                const users = getUserData();
-                if (!users[name]) {
-                    users[name] = {
-                        xp: 0,
-                        streak: 0,
-                        level: 1,
-                        lastLogin: new Date().toISOString(),
-                        progress: {},
-                        hearts: 5
-                    };
-                }
+      if (name && userClass && campus) {
+        user = name;
+        document.getElementById('login').classList.add('hidden');
+        document.getElementById('loading').classList.remove('hidden');
 
-                // Check and update streak
-                const lastLogin = new Date(users[name].lastLogin);
-                const today = new Date();
-                if (today.toDateString() !== lastLogin.toDateString()) {
-                    if ((today - lastLogin) / (1000 * 60 * 60 * 24) < 2) {
-                        users[name].streak += 1;
-                    } else {
-                        users[name].streak = 1;
-                    }
-                }
-
-                users[name].lastLogin = new Date().toISOString();
-                users[name].hearts = 5; // Reset hearts for new session
-                saveUserData(users);
-
-                // Update UI
-                xp = users[name].xp;
-                streak = users[name].streak;
-                document.getElementById('xpNav').innerText = xp;
-                document.getElementById('streak').innerText = streak;
-                document.getElementById('xp').innerText = xp;
-
-                setTimeout(() => {
-                    document.getElementById('loading').classList.add('hidden');
-                    showRoadmap();
-                }, 1500);
-            } else {
-                alert("Please enter your name to begin.");
-            }
+        // Update user data
+        const users = getUserData();
+        if (!users[name]) {
+          users[name] = {
+            xp: 0,
+            streak: 0,
+            level: 1,
+            lastLogin: new Date().toISOString(),
+            progress: {},
+            hearts: 5,
+            class: userClass,
+            campus: campus
+          };
+        } else {
+          // Update class & campus if changed
+          users[name].class = userClass;
+          users[name].campus = campus;
         }
+
+        // Check and update streak
+        const lastLogin = new Date(users[name].lastLogin);
+        const today = new Date();
+        if (today.toDateString() !== lastLogin.toDateString()) {
+          if ((today - lastLogin) / (1000 * 60 * 60 * 24) < 2) {
+            users[name].streak += 1;
+          } else {
+            users[name].streak = 1;
+          }
+        }
+
+        users[name].lastLogin = new Date().toISOString();
+        users[name].hearts = 5; // Reset hearts
+        saveUserData(users);
+
+        // Update UI
+        xp = users[name].xp;
+        streak = users[name].streak;
+        document.getElementById('xpNav').innerText = xp;
+        document.getElementById('streak').innerText = streak;
+        document.getElementById('xp').innerText = xp;
+
+        setTimeout(() => {
+          document.getElementById('loading').classList.add('hidden');
+          showRoadmap();
+        }, 1500);
+      } else {
+        alert("Please enter your name, class, and campus to begin.");
+      }
+    }
 
         // Admin panel functions
         function showAdminLogin() {
@@ -1968,24 +1979,26 @@
         }
 
         function loadUserData() {
-            const users = getUserData();
-            const statsDiv = document.getElementById('userStats');
-            statsDiv.innerHTML = '';
+      const users = getUserData();
+      const statsDiv = document.getElementById('userStats');
+      statsDiv.innerHTML = '';
 
-            Object.entries(users).forEach(([username, data]) => {
-                const card = document.createElement('div');
-                card.className = 'user-card';
-                card.innerHTML = `
-          <div><strong>${username}</strong></div>
-          <div>Level: <span>${data.level}</span></div>
-          <div>XP: <span>${data.xp}</span></div>
-          <div>Streak: <span>${data.streak}</span></div>
-          <div>Hearts: <span>${data.hearts}</span></div>
-          <div>Last Login: ${new Date(data.lastLogin).toLocaleString()}</div>
-        `;
-                statsDiv.appendChild(card);
-            });
-        }
+      Object.entries(users).forEach(([username, data]) => {
+        const card = document.createElement('div');
+        card.className = 'user-card';
+        card.innerHTML = `
+      <div><strong>${username}</strong></div>
+      <div>Class: ${data.class || "N/A"}</div>
+      <div>Campus: ${data.campus || "N/A"}</div>
+      <div>Level: <span>${data.level}</span></div>
+      <div>XP: <span>${data.xp}</span></div>
+      <div>Streak: <span>${data.streak}</span></div>
+      <div>Hearts: <span>${data.hearts}</span></div>
+      <div>Last Login: ${new Date(data.lastLogin).toLocaleString()}</div>
+    `;
+        statsDiv.appendChild(card);
+      });
+    }
 
         function exportUserData() {
             const users = getUserData();
@@ -2469,3 +2482,4 @@
 </body>
 
 </html>
+
