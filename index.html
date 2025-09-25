@@ -1852,6 +1852,12 @@
           question: 'Read and Respond: <br> "I only check your passport and ----------- at the passport control."',
           options: ["visa", "lunch", "nose", "world"],
           answer: "visa",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
         },
         {
           type: "mcq",
@@ -1930,6 +1936,12 @@
           question: 'Read and Respond: <br> "I love Japan. Over there, the trains are ------------ modern than in my city."',
           options: ["many", "much more", "much"],
           answer: "much more",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
         },
       ],
       3: [
@@ -1998,6 +2010,12 @@
           question: 'Fill in the blanks:: <br> If you want to stay another night, it will ----------- extra.',
           options: ["cost", "travel", "find", "fly"],
           answer: "cost",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
         },
         {
           type: "mcq",
@@ -2028,6 +2046,12 @@
           question: "Fill in the blanks: <br>I need to reserve a -----------, but no one's here!",
           options: ["goal", "life", "mistake", "room"],
           answer: "room",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
         },
         {
           type: "mcq",
@@ -2064,6 +2088,12 @@
           question: "Fill in the blanks: <br> I need to unpack my ----------, but I'm late!",
           options: ["zoo", "math", "wall", "bag"],
           answer: "bag",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
         },
         {
           type: "listen",
@@ -2090,6 +2120,12 @@
           question: "Fill in the blanks: <br> It's very easy to ---------- the public transportation in the city.",
           options: ["bake", "sell", "use", "bag"],
           answer: "use",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
         },
         {
           type: "mcq",
@@ -2126,6 +2162,12 @@
           question: "Fill in the blanks: <br> Excuse me, how ---------- is the bus fare to the city?",
           options: ["loud", "much", "free", "cold"],
           answer: "much",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
         },
         {
           type: "mcq",
@@ -2186,6 +2228,12 @@
           question: "Read and Respond: <br> It's sunny today. Let's go outside and have ------------ on the patio!",
           options: ["streets", "questions", "lunch", "clothing"],
           answer: "lunch",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
         },
         {
           type: "mcq",
@@ -2204,18 +2252,36 @@
           question: "Fill in the blanks: <br> The museum workers were really friendly and let me ----------- photos with my phone.",
           options: ["take", "taking", "takes"],
           answer: "take",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
         },
         {
           type: "mcq",
           question: "Fill in the blanks: <br> It was a nice, sunny day, so the restaurant let us ----------- outside.",
           options: ["sit", "sitting", "sets"],
           answer: "sit",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
         },
         {
           type: "mcq",
           question: "Fill in the blanks: <br> We loved that café. The chef let us ----------- when he made coffee art.",
           options: ["watch", "watches", "watching"],
           answer: "watch",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
         },
 
 
@@ -2264,6 +2330,12 @@
           question: 'Read and respond: <br> Spain was the country I liked best. I really ----------- the buildings there.',
           options: ["enjoyed", "gave", "hated", "hurt"],
           answer: "enjoyed",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
         },
         {
           type: "mcq",
@@ -2282,12 +2354,24 @@
           question: 'Read and respond: <br> Sarah\'s dad has let her ------------ his car for her first solo trip.',
           options: ["lose", "break", "steal", "borrow"],
           answer: "borrow",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
         },
         {
           type: "mcq",
           question: 'Read and respond: <br> Trains can go very far. Planes can go the farthest. The ----------- I have traveld was to Paris.',
           options: ["farthest", "far"],
           answer: "farthest",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
         },
         {
           type: "mcq",
@@ -2306,6 +2390,12 @@
           question: 'Read and respond: <br> Bea really enjoyed her trip! On the other hand, she is very -----------.',
           options: ["tired", "amazing", "nice", "happy"],
           answer: "tired",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
         },
         {
           type: "mcq",
@@ -2338,6 +2428,12 @@
           question: "Read and Respond: <br> It's very easy to ----------- the public transportation in the city.",
           options: ["sell", "ask", "use", "bake"],
           answer: "use",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
         },
         {
           type: "mcq",
@@ -2380,18 +2476,36 @@
           question: "Read and Respond: <br> We don't let ----------- use the pool after 8 o'clock.",
           options: ["weeks", "tickets", "guests", "numbers"],
           answer: "guests",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
         },
         {
           type: "mcq",
           question: "Read and Respond: <br> He let me ---------- my dog to the café.",
           options: ["to bring", "bring"],
           answer: "bring",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
         },
         {
           type: "mcq",
           question: "Read and Respond: <br> His seat is ----------- smaller than ours.",
           options: ["much", "very"],
           answer: "much",
+          audio: function () {
+            let text = this.question.replace(/<br>/g, " ");
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 0.9; // slower and clearer
+            speechSynthesis.speak(utterance);
+          }
         },
       ],
       7: [
